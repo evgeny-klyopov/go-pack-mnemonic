@@ -127,11 +127,14 @@ func (m *mnemonic) UnPack(base int) (Converter, error) {
 		reverse = append(reverse, index)
 		i = start
 	}
-	m.convert.numberMnemonic = make([]string, 0, len(reverse))
-	m.convert.mnemonic = make([]string, 0, len(reverse))
+	length := len(reverse)
+	m.convert.numberMnemonic = make([]string, 0, length)
+	m.convert.mnemonic = make([]string, 0, length)
+	m.convert.mnemonicShort = make([]string, 0, length)
 	for i := len(reverse) - 1; i >= 0; i-- {
 		m.convert.numberMnemonic = append(m.convert.numberMnemonic, m.getIndexFormat(reverse[i]))
 		m.convert.mnemonic = append(m.convert.mnemonic, m.wordlist[reverse[i]])
+		m.convert.mnemonicShort = append(m.convert.mnemonicShort, m.getShort(m.wordlist[reverse[i]]))
 	}
 
 	return &m.convert, m.check()
